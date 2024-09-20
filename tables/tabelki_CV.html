@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabelki</title>
+    <style>
+        .table {
+        display: flex;
+        flex-direction: column;
+        padding: 10px;
+        }
+
+        .header {
+        display: flex;
+        flex-direction: row;
+        background-color: #e0e0e0;
+        font-weight: bold;
+        }
+
+        .row {
+        display: flex;
+        flex-direction: row;
+        }
+
+        .cell {
+        flex-basis: 33.33%;
+        padding: 5px;
+        border-bottom: 1px rgba(75, 75, 75, 0.25) solid;
+        min-height:40px ;
+
+        }
+
+        .cell:first-child{
+            flex-basis: 10%;
+        }
+
+        .cell:nth-child(2){
+            flex-basis: 15%;
+        }
+
+        .cell:nth-child(3){
+            flex-basis: 75%;
+        }
+
+        .add-row {
+        margin-top: 10px;
+        text-align: center;
+        }
+
+        .deleteRow{
+            border:none;
+            background: none;
+            width: 15px;
+            position:absolute;
+                left:-50px;
+                margin:10px 0px 0px 0px;
+            left:92.5vw;
+        }
+
+        .editRow{
+            border:none;
+            background: none;
+            width: 15px;
+            position:absolute;
+                left:-50px;
+                margin:10px 0px 0px 0px;
+            left:95.5vw;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="table">
+        <div class="header">
+          <div class="cell" onclick="sort(0)">Nazwa</div>
+          <div class="cell" onclick="sort(1)">Ilość</div>
+          <div class="cell" onclick="sort(2)">Opis</div>
+        </div>
+        <div id="rows">
+            <div class="row">
+                <div class="cell">Dane 1</div>
+                <div class="cell">Dane 2</div>
+                <div class="cell">Dane 3</div>
+            </div>
+        </div>
+        <div class="add-row">
+          <button id="add-row-btn">Dodaj wiersz</button>
+        </div>
+    </div>
+
+    <template id="row-template">
+        <div class="row">
+            <div class="cell"><input type="text"></div>
+            <div class="cell"><input type="text"></div>
+            <div class="cell"><input type="text"></div>
+            <div class="cell"><button class="submit-row-btn">Zatwierdź</button></div>
+        </div>
+    </template>
+
+</body>
+<script>
+    Inf = ["","",""]
+    let rows = document.getElementById('rows')
+    let addRowBtn = document.getElementById('add-row-btn')
+
+    function Reload() {
+        const count = Inf.length;
+        rows.innerHTML=""
+        for (i=0;i<count;i++){
+            j=i+1
+            rows.innerHTML += "<div class='row'> <div class='cell'>"+Inf[i][0]+"</div> <div class='cell'>"+Inf[i][1]+"</div> <div class='cell'>"+Inf[i][2]+"</div> <button type='button' class='deleteRow' onclick='deleteRow("+i+")'>delete</button> <button type='button' class='editRow' onclick='editRow("+i+")'>edit</button>"
+
+        }
+    }
+
+    const Words = [
+    // Owoce
+    "apple", "banana", "orange", "grape", "strawberry", "blueberry", "watermelon", "pineapple", "kiwi", "pear",
+    "peach", "cherry", "plum", "lemon", "lime", "mango", "melon", "raspberry", "blackberry", "pomegranate",
+    "apricot", "fig", "cranberry", "coconut", "guava", "passion fruit", "dragonfruit", "papaya", "lychee",
+    
+    // Warzywa
+    "carrot", "broccoli", "tomato", "potato", "cucumber", "lettuce", "spinach", "pepper", "onion", "garlic",
+    "zucchini", "eggplant", "corn", "pea", "asparagus", "sweet potato", "radish", "cauliflower", "celery",
+    "cabbage", "mushroom", "pumpkin", "beet", "brussels sprout", "kale", "squash", "leek", "artichoke",
+    
+    // Zwierzęta
+    "dog", "cat", "elephant", "lion", "tiger", "giraffe", "monkey", "zebra", "panda", "koala",
+    "dolphin", "whale", "shark", "giraffe", "hippopotamus", "crocodile", "kangaroo", "rhinoceros", "penguin", "polar bear",
+    "parrot", "snake", "toucan", "cheetah", "octopus", "sloth", "chameleon", "gazelle", "gorilla",
+];
+    for (let i = 0; i < 25; i++) {
+    Inf[i] = [];
+    for (let j = 0; j < 3; j++) {
+        if (j == 0){
+            const random = Math.floor(Math.random() * Words.length);
+            Inf[i][j] = Words[random];
+        }
+        if (j == 1){
+            const random = Math.floor(Math.random() * 1000);
+            Inf[i][j] = random;
+        }
+        if (j == 2){
+            Inf[i][j] = "Description nr."+i;
+        }
+
+    }
+}
+
+    function AddRow() {
+        let rowTemplate = document.getElementById('row-template')
+        let newRow = rowTemplate.content.cloneNode(true).firstElementChild
+        let submitRowBtn = newRow.querySelector('.submit-row-btn')
+
+        submitRowBtn.addEventListener('click', SubmitRow)
+
+        rows.appendChild(newRow)
+    }
+
+    function SubmitRow(event) {
+        let count = Inf.length;
+        let row = event.target.closest('.row')
+        let inputs = row.querySelectorAll('input')
+        Inf[count] = []
+
+        inputs.forEach(input => Inf[count].push(input.value))
+
+        console.log(Inf[count])
+        Reload()
+    }
+
+    function deleteRow(x) {
+        Inf.splice(x, 1);
+        Reload()
+    }
+
+    let y = 1;
+    let lastSortProperty = null;
+    function sort(x) {
+        if (lastSortProperty !== x) {
+            y = 0;
+            lastSortProperty = x;
+        }
+    if (y === 0) {
+        Inf.sort(function(a, b) {
+        var firstValueA = a[x];
+        var firstValueB = b[x];
+        if (firstValueA < firstValueB) {
+            return -1;
+        }
+        if (firstValueA > firstValueB) {
+            return 1;
+        }
+        return 0;
+        });
+        Reload();
+        y++;
+    } else {
+        Inf.sort(function(a, b) {
+        var firstValueA = a[x];
+        var firstValueB = b[x];
+        if (firstValueA < firstValueB) {
+            return 1;
+        }
+        if (firstValueA > firstValueB) {
+            return -1;
+        }
+        return 0;
+        });
+        Reload();
+        y--;
+    }
+    }
+
+function editRow(x) {
+    let rowTemplate = document.getElementById('row-template')
+    let editRow = rowTemplate.content.cloneNode(true).firstElementChild
+    let submitRowBtn = editRow.querySelector('.submit-row-btn')
+    let inputs = editRow.querySelectorAll('input')
+  
+    inputs.forEach((input, index) => {
+        input.value = Inf[x][index]
+    })
+
+    submitRowBtn.addEventListener('click', function() {
+        Inf[x] = []
+        inputs.forEach(input => Inf[x].push(input.value))
+        Reload()
+    })
+
+    let rowToDelete = document.getElementsByClassName("row")[x];
+    rowToDelete.parentNode.removeChild(rowToDelete);
+
+    rows.appendChild(editRow)
+}
+
+
+
+
+
+    Reload()
+
+    addRowBtn.addEventListener('click', AddRow)
+
+</script>
+</html>
