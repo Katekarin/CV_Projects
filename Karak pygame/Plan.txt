@@ -1,0 +1,17 @@
+-> Sama gra
+    - Chodzenie po mapie
+    - losowanie pokoju
+    - renderowanie w 100% losowego pokoju
+    - walka
+    - zbieranie przedmiotów
+
+-> Boty
+
+-> Wybór postaci/Lobby
+
+-> Inni gracze
+
+-> Umiejętności postaci
+
+-> szlify
+    - przybliżanie

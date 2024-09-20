@@ -1,0 +1,223 @@
+zmienne{
+  --width: 13.5vw; /* Zastosuj jednostki vw dla szerokości UI */
+  --rooms: calc(100vw - var(--width));
+}
+
+*{
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-size: 1.25em;
+  background-size: cover;
+}
+html{
+  max-width: 100%;
+  max-height: 100%;
+  overflow: scroll;
+}
+html::-webkit-scrollbar, #UI::-webkit-scrollbar {
+  display: none;
+}
+body {
+  background-color: #111;
+  color: #ddd;
+}
+
+#UI{
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  overflow-y: scroll; /* Pionowy scroll, jeśli jest potrzebny */
+  background-color: #333; /* Dodatkowe tło dla UI */
+  height: 100%;
+  width: var(--width); /* Użyj zmiennej vw dla szerokości UI */
+  padding-right: 3px;
+  border-right: solid #888 3px;
+  overflow: scroll;
+}
+
+#potrait{
+  width: 13.5vw;
+  height: 13.5vw;
+}
+
+#game-container {
+  height: 100%;
+  overflow: hidden;
+}
+
+
+#health-box{
+  width: 250px;
+  height: auto;
+  padding-top: 2.5%;
+  text-align: center;
+}
+
+.health-container {
+  width: 2.5vw;
+  height: 2.5vw;
+  display: inline-block;
+  border: solid #444 1px;
+  background-image: url('Graphic/UI/HealthBox.jpg');
+}
+
+#inventory-box{
+  width: 250px;
+  height: 325px;
+  padding-top: 2.5%;
+  text-align: center;
+}
+
+.inventory-slot {
+  width: 95px;
+  height: 95px;
+  display: inline-block;
+  border: solid #444 1px;
+}
+
+.inventory-slot:nth-child(1),
+.inventory-slot:nth-child(2) {
+  background-image: url('Graphic/UI/WeaponBox.jpg');
+}
+
+.inventory-slot:nth-child(3),
+.inventory-slot:nth-child(4),
+.inventory-slot:nth-child(5) {
+  background-image: url('Graphic/UI/SpellBox.jpg');
+}
+
+.inventory-slot:nth-child(6) {
+  background-image: url('Graphic/UI/KeyBox.jpg');
+}
+
+#treasure{
+  width: 250px;
+  height: 65px;
+  padding-top: 2.5%;
+  text-align: center;
+}
+
+#treasure-image{
+  width: 55px;
+  display: inline-block;
+  height: 55px;
+  border: solid #444 1px;
+}
+
+#skill-box{
+  width: 250px;
+  height: 60px;
+  padding-top: 10%;
+  text-align: center;
+}
+
+.skill {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: inline-block;
+  border: solid #444 1px;
+}
+
+#game-box{
+  position: absolute;
+  top: 0px;
+  left: 253px;
+  height: 100%;
+  width: var(--rooms); /* Wykorzystaj zmienną dla szerokości planszy gry */
+  border: solid #888 3px;
+  border-left: none;
+  display: grid;
+  grid-template-columns: repeat(15, 1fr);
+  overflow: scroll;
+  scrollbar-width: 0px;
+}
+::-webkit-scrollbar{
+  display: none;
+}
+
+.hiddenRoom, .room {
+  overflow: hidden;
+  height: 110px;
+  width: 110px;
+  display: flex;
+  align-items: center; /* Wertykalne wyśrodkowanie */
+  justify-content: center; /* Horyzontalne wyśrodkowanie */
+  flex-direction: column; /* Domyślnie centrowanie wertykalne i horyzontalne */
+  text-align: center; /* Dla dodatkowej pewności */
+}
+
+
+.StartRoom{
+  background-image: url(Graphic/Rooms/startRoom.jpg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.token {
+  width: 45px;
+  height: 45px;
+  background-repeat: no-repeat;
+  background-position: center;
+  border-radius: 50%;
+  display: block;
+}
+
+.rouge {
+  background-image: url('Graphic/Heroes/Rouge.jpg');
+  width: 250px;
+  height: 250px;
+}
+
+.Rat {
+  width: 45px;
+  height: 45px;
+  background-image: url('Graphic/Ennemys/Rat.jpg');
+  background-position: center;
+}
+
+.Skeletone {
+  width: 45px;
+  height: 45px;
+  background-image: url('Graphic/Ennemys/Skeletone.jpg');
+  background-position: center;
+}
+
+.Skeletone_Barbarian{
+  width: 45px;
+  height: 45px;
+  background-image: url('Graphic/Ennemys/Skeletone_Barbarian.jpg');
+  background-position: center;
+}
+
+.Mummy {
+  width: 45px;
+  height: 45px;
+  background-image: url('Graphic/Ennemys/Mummy.jpg');
+  background-position: center;
+}
+
+.Skeleton_Key {
+  width: 45px;
+  height: 45px;
+  background-image: url('Graphic/Ennemys/Skeleton_Key.jpg');
+  background-position: center;
+}
+
+.item {
+  width: 45px;
+  height: 45px;
+}
+
+#check-item-button {
+  background-color: #008CBA;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin: 50px 10px;
+}

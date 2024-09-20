@@ -1,0 +1,58 @@
+<!-- index.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prosta gra</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="score" class="score">0</div> <!-- Dodaj element dla wyniku -->
+  <div id="game-container">
+    <!-- Element reprezentujący postać gracza -->
+    <div id="player" class="player"></div>
+  </div>
+  <script src="system.js"></script>
+  <script src="movement.js"></script>
+  <script src="shoot.js"></script>
+  <script src="player.js"></script>
+  <script src="enemy.js"></script>
+  <script>
+    // Funkcja resetująca pozycje wszystkich obiektów gry
+    function resetPositions() {
+      // Resetuj pozycje postaci gracza
+      resetPlayerPosition();
+      // Tutaj można dodać resetowanie pozycji innych obiektów gry
+    }
+
+    // Główna pętla gry
+    function gameLoop() {
+      // Tutaj umieść logikę gry
+
+      // Poruszaj postacią gracza na podstawie wciśniętych klawiszy
+      movePlayer();
+
+      // Resetuj pozycje obiektów
+      resetPositions();
+
+      // Ponownie uruchom pętlę gry
+      requestAnimationFrame(gameLoop);
+    }
+
+    // Uruchomienie gry po załadowaniu strony
+    window.onload = function() {
+      // Resetuj pozycje postaci gracza na początku
+      resetPlayerPosition();
+      // Uruchom pętlę gry
+      gameLoop();
+      // Rozpocznij generowanie wrogów
+      generateEnemies();
+    };
+
+    // Obsługa kliknięcia myszką
+    document.addEventListener('click', playerShoot);
+  </script>
+</body>
+</html>
