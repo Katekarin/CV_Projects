@@ -1,0 +1,24 @@
+*{
+    margin: 0;
+    padding:0;
+    box-sizing: border-box;
+}
+body{
+    background: #222;
+    color:rgb(216, 168, 47);
+    text-align: center;
+    margin-top: 1%;
+    font-size: 1.25em;
+}
+input, select, button {
+    text-decoration: none;
+    background: #111;
+    color:rgb(216, 168, 47);
+    border: solid black 1px;
+    font-size: 1.25em;
+}
+input{
+    width:auto;
+    display: block;
+    margin: 10px auto;
+}
